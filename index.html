@@ -2,78 +2,210 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Patatap Clone</title>
+    <title>Tests</title>
     <script type="text/javascript" src="assets/js/lib/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="assets/js/lib/paper-full.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.7/howler.core.min.js"></script>
     <link rel="stylesheet" href="assets/css/styles.css">
-    <script type="text/javascript">
-      paper.install(window);
-      window.onload = function() {
-        // paper.setup('myCanvas');
-        // var path = new Path.Rectangle([100, 100], [200, 200]);
-        // var otherPath = new Path.Rectangle([300,100], [200,200]);
-        // otherPath.strokeColor = 'black';
-        // path.strokeColor = 'black';
-        //
-        // view.onFrame = function(event) {
-        //   // On each frame, rotate the path by 3 degrees:
-        //   path.rotate(1);
-        //   otherPath.rotate(1);
-        // }
+    <script type="text/paperscript" canvas="canvas">
+      var radius = 500;
+      var secondCount = 240; //multiples of 60
+      var scale = .85;
+      var hueSpeed = 1;
+      var randomColor;
+      var keys = {
+        q: {
+      		sound: new Howl({
+        		src: ['assets/sounds/bubbles.mp3']
+      		}),
+      		color: '#1abc9c'
+      	},
+      	w: {
+      		sound: new Howl({
+        		src: ['assets/sounds/clay.mp3']
+      		}),
+      		color: '#2ecc71'
+      	},
+      	e: {
+      		sound: new Howl({
+        		src: ['assets/sounds/confetti.mp3']
+      		}),
+      		color: '#3498db'
+      	},
+      	r: {
+      		sound: new Howl({
+        		src: ['assets/sounds/corona.mp3']
+      		}),
+      		color: '#9b59b6'
+      	},
+      		t: {
+      		sound: new Howl({
+        		src: ['assets/sounds/dotted-spiral.mp3']
+      		}),
+      		color: '#34495e'
+      	},
+      	y: {
+      		sound: new Howl({
+        		src: ['assets/sounds/flash-1.mp3']
+      		}),
+      		color: '#16a085'
+      	},
+      	u: {
+      		sound: new Howl({
+        		src: ['assets/sounds/flash-2.mp3']
+      		}),
+      		color: '#27ae60'
+      	},
+      	i: {
+      		sound: new Howl({
+        		src: ['assets/sounds/flash-3.mp3']
+      		}),
+      		color: '#2980b9'
+      	},
+      	o: {
+      		sound: new Howl({
+      			src: ['assets/sounds/glimmer.mp3']
+      		}),
+      		color: '#8e44ad'
+      	},
+      	p: {
+      		sound: new Howl({
+        		src: ['assets/sounds/moon.mp3']
+      		}),
+      		color: '#2c3e50'
+      	},
+      	a: {
+      		sound: new Howl({
+        		src: ['assets/sounds/pinwheel.mp3']
+      		}),
+      		color: '#f1c40f'
+      	},
+      	s: {
+      		sound: new Howl({
+        		src: ['assets/sounds/piston-1.mp3']
+      		}),
+      		color: '#e67e22'
+      	},
+      		d: {
+      		sound: new Howl({
+        		src: ['assets/sounds/piston-2.mp3']
+      		}),
+      		color: '#e74c3c'
+      	},
+      	f: {
+      		sound: new Howl({
+        		src: ['assets/sounds/prism-1.mp3']
+      		}),
+      		color: '#95a5a6'
+      	},
+      	g: {
+      		sound: new Howl({
+        		src: ['assets/sounds/prism-2.mp3']
+      		}),
+      		color: '#f39c12'
+      	},
+      	h: {
+      		sound: new Howl({
+        		src: ['assets/sounds/prism-3.mp3']
+      		}),
+      		color: '#d35400'
+      	},
+      	j: {
+      		sound: new Howl({
+        		src: ['assets/sounds/splits.mp3']
+      		}),
+      		color: '#1abc9c'
+      	},
+      	k: {
+      		sound: new Howl({
+        		src: ['assets/sounds/squiggle.mp3']
+      		}),
+      		color: '#2ecc71'
+      	},
+      	l: {
+      		sound: new Howl({
+        		src: ['assets/sounds/strike.mp3']
+      		}),
+      		color: '#3498db'
+      	},
+      	z: {
+      		sound: new Howl({
+        		src: ['assets/sounds/suspension.mp3']
+      		}),
+      		color: '#9b59b6'
+      	},
+      	x: {
+      		sound: new Howl({
+        		src: ['assets/sounds/timer.mp3']
+      		}),
+      		color: '#34495e'
+      	},
+      	c: {
+      		sound: new Howl({
+        		src: ['assets/sounds/ufo.mp3']
+      		}),
+      		color: '#16a085'
+      	},
+      	v: {
+      		sound: new Howl({
+        		src: ['assets/sounds/veil.mp3']
+      		}),
+      		color: '#27ae60'
+      	},
+      	b: {
+      		sound: new Howl({
+        		src: ['assets/sounds/wipe.mp3']
+      		}),
+      		color: '#2980b9'
+      	},
+      	n: {
+      		sound: new Howl({
+      			src: ['assets/sounds/zig-zag.mp3']
+      		}),
+      		color: '#8e44ad'
+      	},
+      	m: {
+      		sound: new Howl({
+        		src: ['assets/sounds/moon.mp3']
+      		}),
+      		color: '#2c3e50'
+      	}
+      };
 
-        // paper.setup('myCanvas');
-    		// // Create a simple drawing tool:
-    		// var tool = new Tool();
-    		// var path;
-        //
-    		// // Define a mousedown and mousedrag handler
-    		// tool.onMouseDown = function(event) {
-    		// 	path = new Path();
-    		// 	path.strokeColor = 'black';
-        //   path.strokeWidth = 10;
-        //   path.strokeRadius = 15;
-    		// 	path.add(event.point);
-    		// }
-        //
-    		// tool.onMouseDrag = function(event) {
-    		// 	path.add(event.point);
-    		// }
-
-        paper.setup('myCanvas');
-
-    		// Create two drawing tools.
-    		// tool1 will draw straight lines,
-    		// tool2 will draw clouds.
-
-    		// Both share the mouseDown event:
-    		var path;
-    		function onMouseDown(event) {
-    			path = new Path();
-    			path.strokeColor = 'black';
-    			path.add(event.point);
-    		}
-
-    		tool1 = new Tool();
-    		tool1.onMouseDown = onMouseDown;
-
-    		tool1.onMouseDrag = function(event) {
-    			path.add(event.point);
-    		}
-
-    		tool2 = new Tool();
-    		tool2.minDistance = 20;
-    		tool2.onMouseDown = onMouseDown;
-
-    		tool2.onMouseDrag = function(event) {
-    			// Use the arcTo command to draw cloudy lines
-    			path.arcTo(event.point);
-    		}
+      function onKeyDown(event) {
+        if(keys[event.key]){
+          keys[event.key].sound.play();
+          makeCircle(event);
+        }
       }
+      function makeCircle(event) {
+        var r = Math.floor(Math.random() * 255) / 255;
+        var g = Math.floor(Math.random() * 255) / 255;
+        var b = Math.floor(Math.random() * 255) / 255;
+        var maxPoint = new Point(view.size.width, view.size.height);
+        var randPoint = new Point.random();
+        var point = maxPoint * randPoint;
+        var newCircle = new Path.Circle(point , radius);
+        newCircle.fillColor = keys[event.key].color; //new Color(r, g, b);
+      }
+      function onFrame(event) {
+        if(project.activeLayer.firstChild != null){
+          for (var i = 0; i < project.activeLayer.children.length; i++) {
+            project.activeLayer.children[i].scale(scale);
+            project.activeLayer.children[i].fillColor.hue += hueSpeed;
+
+          }
+        }
+        for (var i = 0; i < project.activeLayer.children.length; i++) {
+          if(project.activeLayer.children[i].area < 1){
+            project.activeLayer.children[i].remove()
+          }
+        }
+      }
+
     </script>
   </head>
   <body>
-    <a href="#" onclick="tool1.activate();">Lines</a>
-    <a href="#"onclick="tool2.activate();">Cloudy Lines</a>
-    <canvas id="myCanvas"></canvas>
+    <canvas id="canvas"></canvas>
   </body>
 </html>
