@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <script type="text/paperscript" canvas="canvas">
       var radius = 500;
-      var secondCount = 240; //multiples of 60
+      var secondCount = 240; //multiples of 60 made for testing
       var scale = .85;
       var hueSpeed = 1;
       var randomColor;
+      //Key objects for different colors and sounds
       var keys = {
         q: {
       		sound: new Howl({
@@ -178,17 +179,17 @@
           makeCircle(event);
         }
       }
+
       function makeCircle(event) {
-        var r = Math.floor(Math.random() * 255) / 255;
-        var g = Math.floor(Math.random() * 255) / 255;
-        var b = Math.floor(Math.random() * 255) / 255;
+        //create circle at random point in view
         var maxPoint = new Point(view.size.width, view.size.height);
         var randPoint = new Point.random();
         var point = maxPoint * randPoint;
         var newCircle = new Path.Circle(point , radius);
-        newCircle.fillColor = keys[event.key].color; //new Color(r, g, b);
+        newCircle.fillColor = keys[event.key].color;
       }
       function onFrame(event) {
+        //Animate scale down
         if(project.activeLayer.firstChild != null){
           for (var i = 0; i < project.activeLayer.children.length; i++) {
             project.activeLayer.children[i].scale(scale);
@@ -196,6 +197,7 @@
 
           }
         }
+        //Delete circle if scale is less than zero
         for (var i = 0; i < project.activeLayer.children.length; i++) {
           if(project.activeLayer.children[i].area < 1){
             project.activeLayer.children[i].remove()
